@@ -1,4 +1,3 @@
-# Store this code in 'app.py' file
 
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_mysqldb import MySQL
@@ -100,7 +99,7 @@ def testdb():
 
 @app.route('/trade')
 def trade():
-    # Your code to pass data to the 'trade.html' template
+    #ode to pass data to the 'trade.html' template
     return render_template('trade.html')
 
 @app.route('/products')
