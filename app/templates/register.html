@@ -8,27 +8,34 @@
             <h1>Sun Devil Stocks</h1>
             <nav>
                 <ul>
-                    <li><a href="home.html">Home</a></li>
-                    <li><a href="login.html">Login</a></li>
-                    <li><a href="portfolio.html">Portfolio</a></li>
-                    <li><a href="Trade.html">Trade</a></li>
-                    <li><a href="Products.html">Products</a></li>
+                    <li><a href="{{ url_for('home') }}" class='active'>Home</a></li>
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('portfolio') }}">Portfolio</a></li>
+                    <li><a href="{{ url_for('trade') }}">Trade</a></li>
+                    <li><a href="{{ url_for('products') }}">Products</a></li>
+
                 </ul>
             </nav>
         </header>
         <section class="register">
             <h2>Register</h2>
-            <form method="post" action="register.html" class="form-container">
-                <label for="fullName">Full Name:</label>
-                <input type="text" id="fullName" name="fullName" required>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-                <label for="confirmPassword">Confirm Password:</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" required>
+            <form method="post" action="{{ url_for('register') }}" class="form-container">
+                <label for="FullName">Full Name:</label>
+                <input type="text" id="FullName" name="FullName" required>
+                
+                <label for="Email">Email:</label>
+                <input type="email" id="Email" name="Email" required>
+                
+                <label for="CustPass">Password:</label>
+                <input type="password" id="CustPass" name="CustPass" required>
+                
+                <label for="confirmCustPass">Confirm Password:</label>
+                <input type="password" id="confirmCustPass" name="confirmCustPass" required>
+                
                 <button type="submit" class="btn-small">Register</button>
             </form>
+                     
+            
         </section>
         <footer>
             <h2>Have more Questions? Give Us a Call!</h2>

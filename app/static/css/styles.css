@@ -196,3 +196,12 @@ p {
     display: block;
     margin: 0 auto;
 }
+
+.user-name {
+    float: right; /* or use flexbox alignment if you're using flexbox for nav */
+    padding: 10px; /* adjust as needed */
+    color: #fff; /* adjust as needed */
+    background-color: #333; /* adjust as needed */
+    /* add other styles such as margin, font-size, etc., as needed to match your design */
+  }
+  

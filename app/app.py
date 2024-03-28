@@ -21,28 +21,27 @@ app.config['MYSQL_DB'] = 'sun_devil_stocks'
 mysql = MySQL(app)
 
 @app.route('/')
-@app.route('/home.html')
+@app.route('/home')
 def home():
     return render_template('home.html')
 
-@app.route('/login.html', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])  # Changed to '/login' to match the form action
 def login():
     msg = ''
-    return render_template('login.html', msg=msg)
     if request.method == 'POST' and 'email' in request.form and 'password' in request.form:
-        email = request.form['email']
+        email = request.form['email']  # Use 'email' to match the form
         password = request.form['password']
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM customer WHERE Email = %s AND CustPass = %s', (email, generate_password_hash(password),))
+        cursor.execute('SELECT * FROM customer WHERE Email = %s', (email,))
         account = cursor.fetchone()
-        if account:
+        if account and check_password_hash(account['CustPass'], password):
             session['loggedin'] = True
             session['id'] = account['CustomerID']
             session['username'] = account['FullName']
-            msg = 'Logged in successfully !'
             return redirect(url_for('home'))
         else:
             msg = 'Incorrect username/password!'
+    return render_template('login.html', msg=msg)
     
 
 @app.route('/logout')
@@ -52,29 +51,36 @@ def logout():
 	session.pop('username', None)
 	return redirect(url_for('login'))
 
-@app.route('/register.html', methods=['GET', 'POST'])
+@app.route('/register', methods=['GET', 'POST'])
 def register():
+    print("Form data:", request.form)
     msg = ''
-    if request.method == 'POST' and all(k in request.form for k in ('username', 'password', 'email')):
-        username = request.form['username']
-        password = request.form['password']
-        email = request.form['email']
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM customer WHERE Email = %s', (email,))
-        account = cursor.fetchone()
-        if account:
-            msg = 'Account already exists!'
-        elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
+    if request.method == 'POST':
+        full_name = request.form['FullName']
+        email = request.form['Email']
+        password = request.form['CustPass']
+        confirm_password = request.form['confirmCustPass']
+
+        if not re.match(r'[^@]+@[^@]+\.[^@]+', email):
             msg = 'Invalid email address!'
-        elif not re.match(r'[A-Za-z0-9]+', username):
-            msg = 'Username must contain only characters and numbers!'
+        elif password != confirm_password:
+            msg = 'Passwords do not match!'
         else:
-            cursor.execute('INSERT INTO customer VALUES (NULL, %s, %s, %s)', (username, email, generate_password_hash(password),))
-            mysql.connection.commit()
-            msg = 'You have successfully registered!'
-    elif request.method == 'POST':
-        msg = 'Please fill out the form!'
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM customer WHERE Email = %s', (email,))
+            account = cursor.fetchone()
+            if account:
+                msg = 'Account already exists!'
+            else:
+                hashed_password = generate_password_hash(password)
+                cursor.execute('INSERT INTO customer (FullName, Email, CustPass) VALUES (%s, %s, %s)', (full_name, email, hashed_password))
+                mysql.connection.commit()
+                cursor.close()
+                return redirect(url_for('login'))  # Redirect to the login route
+        cursor.close()
     return render_template('register.html', msg=msg)
+
+
 
 @app.route('/portfolio.html')
 def portfolio():
@@ -90,6 +96,16 @@ def testdb():
         return f"MySQL version: {version[0]}"
     except MySQLdb.Error as e:
         return f"Error: {str(e)}"
+
+
+@app.route('/trade')
+def trade():
+    # Your code to pass data to the 'trade.html' template
+    return render_template('trade.html')
+
+@app.route('/products')
+def products():
+    return render_template('products.html')
 
 
 

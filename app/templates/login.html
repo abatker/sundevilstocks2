@@ -11,11 +11,11 @@
         <h1>Sun Devil Stocks</h1>
         <nav>
             <ul>
-                <li><a href="home.html">Home</a></li>
-                <li><a href="login.html" class="active">Login</a></li>
-                <li><a href="portfolio.html">Portfolio</a></li>
-                <li><a href="Trade.html">Trade</a></li>
-                <li><a href="Products.html">Products</a></li>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('login') }}" class='active'>Login</a></li>
+                <li><a href="{{ url_for('portfolio') }}">Portfolio</a></li>
+                <li><a href="{{ url_for('trade') }}">Trade</a></li>
+                <li><a href="{{ url_for('products') }}">Products</a></li>
             </ul>
         </nav>
     </header>
@@ -32,17 +32,19 @@
                     <button type="submit">Login as Admin</button>
                 </form>
             </div>
+            <!-- User Login -->
             <div class="login-option">
                 <h3>User Login</h3>
-                <form action="/userLogin" method="post">
-                    <label for="user-username">Username:</label>
-                    <input type="text" id="user-username" name="username" required>
+                <form action="{{ url_for('login') }}" method="post"> <!-- Corrected the action -->
+                    <label for="user-email">Email:</label>
+                    <input type="email" id="user-email" name="email" required> <!-- Corrected the name attribute -->
                     <label for="user-password">Password:</label>
                     <input type="password" id="user-password" name="password" required>
                     <button type="submit">Login as User</button>
                 </form>
-                <a href="register.html">Don't have an account? Register here</a>
+                <a href="{{ url_for('register') }}">Don't have an account? Register here</a>
             </div>
+
         </section>
     </main>
 </body>

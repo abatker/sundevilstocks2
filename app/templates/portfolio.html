@@ -11,11 +11,12 @@
         <h1>Sun Devil Stocks</h1>
         <nav>
             <ul>
-                <li><a href="home.html">Home</a></li>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="portfolio.html" class="active">Portfolio</a></li>
-                <li><a href="Trade.html">Trade</a></li>
-                <li><a href="Products.html">Products</a></li>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('portfolio') }}"class='active'>Portfolio</a></li>
+                <li><a href="{{ url_for('trade') }}">Trade</a></li>
+                <li><a href="{{ url_for('products') }}">Products</a></li>
+
             </ul>
         </nav>
     </header>
