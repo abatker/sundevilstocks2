@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrator Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Administrator Dashboard</h1>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <h3>Create New Stocks</h3>
+                <form>
+                    <div class="form-group">
+                        <label for="company-name">Company Name</label>
+                        <input type="text" class="form-control" id="company-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="volume">Volume</label>
+                        <input type="number" class="form-control" id="volume" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="initial-price">Initial Price</label>
+                        <input type="number" class="form-control" id="initial-price" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="background-color: #7B1432;">Create Stock</button>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <h3>Change Market Hours</h3>
+                <p>Users will only be able to execute trades during market hours.</p>
+                <form>
+                    <div class="form-group">
+                        <label for="market-hours">Market Hours</label>
+                        <input type="text" class="form-control" id="market-hours" placeholder="E.g., 9:00 AM - 4:00 PM" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="background-color: #7B1432;">Change Market Hours</button>
+                </form>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <h3>Change Market Schedule</h3>
+                <p>Market will only be open during weekdays and closed on holidays.</p>
+                <form>
+                    <div class="form-group">
+                        <label for="market-schedule">Market Schedule</label>
+                        <input type="text" class="form-control" id="market-schedule" placeholder="E.g., Monday - Friday" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="background-color: #7B1432;">Change Market Schedule</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
