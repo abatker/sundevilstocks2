@@ -1,3 +1,4 @@
+# Store this code in 'app.py' file
 
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_mysqldb import MySQL
@@ -12,10 +13,17 @@ app = Flask(__name__)
 
 app.secret_key = 'password'
 
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'password123!'
-app.config['MYSQL_DB'] = 'sun_devil_stocks'
+app.config['MYSQL_HOST'] = 'sundevilstocksdb.cr82ako04zgl.us-east-1.rds.amazonaws.com'
+app.config['MYSQL_USER'] = 'root'  # RDS master username
+app.config['MYSQL_PASSWORD'] = 'password123!'  # RDS password
+app.config['MYSQL_DB'] = 'sundevilstocksdb'  # RDS database name
+
+
+print("Database host:", app.config['MYSQL_HOST'])
+print("Database user:", app.config['MYSQL_USER'])
+print("Database name:", app.config['MYSQL_DB'])
+
+
 
 mysql = MySQL(app)
 
@@ -99,7 +107,7 @@ def testdb():
 
 @app.route('/trade')
 def trade():
-    #ode to pass data to the 'trade.html' template
+    # Your code to pass data to the 'trade.html' template
     return render_template('trade.html')
 
 @app.route('/products')
@@ -110,3 +118,4 @@ def products():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
