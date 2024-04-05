@@ -11,12 +11,18 @@
         <h1>Sun Devil Stocks</h1>
         <nav>
             <ul>
-                <li><a href="{{ url_for('home') }}">Home</a></li>
-                <li><a href="{{ url_for('login') }}" class='active'>Login</a></li>
+                <li><a href="{{ url_for('home') }}" class='active'>Home</a></li>
                 <li><a href="{{ url_for('portfolio') }}">Portfolio</a></li>
                 <li><a href="{{ url_for('trade') }}">Trade</a></li>
                 <li><a href="{{ url_for('products') }}">Products</a></li>
-            </ul>
+                {% if 'loggedin' in session %}
+                  <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                  <li class="user-name">Hello, {{ session['username'] }}</li>
+                {% else %}
+                  <li><a href="{{ url_for('login') }}">Login</a></li>
+                  <li><a href="{{ url_for('register') }}">Register</a></li>
+                {% endif %}
+              </ul>
         </nav>
     </header>
     <main>
