@@ -13,7 +13,6 @@
               <ul>
                 <li><a href="{{ url_for('home') }}" class='active'>Home</a></li>
                 <li><a href="{{ url_for('portfolio') }}">Portfolio</a></li>
-                <li><a href="{{ url_for('trade') }}">Trade</a></li>
                 <li><a href="{{ url_for('products') }}">Products</a></li>
                 {% if 'loggedin' in session %}
                   <li><a href="{{ url_for('logout') }}">Logout</a></li>
