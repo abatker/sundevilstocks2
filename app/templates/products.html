@@ -1,29 +1,94 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Sun Devil Stocks</title>
-        <meta name="description" content="Welcome to SunDevilStocks.com, your number one source for stock market updates and news.">
-        <meta name="keywords" content="Stocks, Market, Finance, Investment, Sun Devil">
-        <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
-    </head>
-    <body>
-        <header>
-            <h1>Sun Devil Stocks</h1>
-            <nav>
-                <ul>
-                    <li><a href="{{ url_for('home') }}" class='active'>Home</a></li>
-                    <li><a href="{{ url_for('portfolio') }}">Portfolio</a></li>
-                    <li><a href="{{ url_for('trade') }}">Trade</a></li>
-                    <li><a href="{{ url_for('products') }}">Products</a></li>
-                    {% if 'loggedin' in session %}
-                      <li><a href="{{ url_for('logout') }}">Logout</a></li>
-                      <li class="user-name">Hello, {{ session['username'] }}</li>
-                    {% else %}
-                      <li><a href="{{ url_for('login') }}">Login</a></li>
-                      <li><a href="{{ url_for('register') }}">Register</a></li>
-                    {% endif %}
-                  </ul>
-            </nav>
-        </header>
-    </body>
+<head>
+    <title>Sun Devil Stocks</title>
+    <meta name="description" content="Welcome to SunDevilStocks.com, your number one source for stock market updates and news.">
+    <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            background-color: #f8f8f8;
+        }
+        #stockSelector {
+            margin-bottom: 20px;
+        }
+        #myChart {
+            width: 80%;
+            height: 40%;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Sun Devil Stocks</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('portfolio') }}">Portfolio</a></li>
+                <li><a href="{{ url_for('products') }}" class='active'>Products</a></li>
+            </ul>
+        </nav>
+    </header>
+    <select id="stockSelector" onchange="updateSelectedStock()">
+        <option value="AAPL">Apple</option>
+        <option value="GOOGL">Google</option>
+        <option value="MSFT">Microsoft</option>
+    </select>
+    <canvas id="myChart"></canvas>
+    <script>
+        var stockData = {
+            'AAPL': [150, 153, 156, 154, 158],
+            'GOOGL': [2800, 2795, 2810, 2820, 2800],
+            'MSFT': [300, 310, 305, 308, 307]
+        };
+        var timeLabels = ['9 AM', '10 AM', '11 AM', '12 PM', '1 PM']; // time labels
+
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: timeLabels,
+                datasets: [{
+                    label: 'Stock Price',
+                    data: stockData['AAPL'], // Default to Apple
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: false
+                    }
+                }
+            }
+        });
+
+        function updateSelectedStock() {
+            var selectedStock = document.getElementById('stockSelector').value;
+            myChart.data.datasets[0].data = stockData[selectedStock];
+            myChart.data.datasets[0].label = selectedStock + ' Stock Price';
+            myChart.update();
+        }
+
+        // Simulate real-time updates
+        setInterval(function() {
+            // Add new price to the selected stock and update chart
+            var selectedStock = document.getElementById('stockSelector').value;
+            var lastPrice = stockData[selectedStock][stockData[selectedStock].length - 1];
+            var newPrice = lastPrice * (1 + (Math.random() - 0.5) / 10);
+            stockData[selectedStock].push(newPrice);
+            // Keep the array to the last 5 prices for the sake of the example
+            stockData[selectedStock] = stockData[selectedStock].slice(-5);
+            updateSelectedStock();
+        }, 5000); // Update every 5 seconds
+    </script>
+</body>
 </html>
