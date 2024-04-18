@@ -2,56 +2,164 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio - Sun Devil Stocks</title>
-    <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
+    <link rel="stylesheet" href="../static/css/styles.css">
 </head>
 <body>
     <header>
-        <h1>Sun Devil Stocks</h1>
+        <h1><a href="{{ url_for('home') }}">Sun Devil Stocks</a></h1>
         <nav>
             <ul>
-                <li><a href="{{ url_for('home') }}" class='active'>Home</a></li>
-                <li><a href="{{ url_for('portfolio') }}">Portfolio</a></li>
-                <li><a href="{{ url_for('trade') }}">Trade</a></li>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('portfolio') }}" class="active">Portfolio</a></li>
                 <li><a href="{{ url_for('products') }}">Products</a></li>
                 {% if 'loggedin' in session %}
-                  <li><a href="{{ url_for('logout') }}">Logout</a></li>
-                  <li class="user-name">Hello, {{ session['username'] }}</li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                    <li class="user-name">Hello, {{ session['username'] }}</li>
                 {% else %}
-                  <li><a href="{{ url_for('login') }}">Login</a></li>
-                  <li><a href="{{ url_for('register') }}">Register</a></li>
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}">Register</a></li>
                 {% endif %}
-              </ul>
+            </ul>
         </nav>
     </header>
     <main>
-        <section class="portfolio-summary">
-            <h2>Portfolio Summary</h2>
-            <div class="summary-details">
-                <!-- Summary details such as total value, profit/loss, etc. -->
+        <div class="portfolio">
+            <div class="section">
+                <h2>Cash Balance</h2>
+                <p id="cash-balance">$0.00</p>
             </div>
-            <div class="investment-overview">
-                <!-- Graphs or charts visualizing the portfolio performance -->
+            <div class="section">
+                <h2>Stock Holdings</h2>
+                <table id="stock-holdings">
+                    <!-- Table headers -->
+                    <thead>
+                        <tr>
+                            <th>Stock Name</th>
+                            <th>Shares</th>
+                            <th>Price</th>
+                            <th>Total Value</th>
+                        </tr>
+                    </thead>
+                    <!-- Table body with your stock holding data -->
+                    <tbody>
+                        <tr>
+                            <td>Microsoft</td>
+                            <td>10</td>
+                            <td>$200.00</td>
+                            <td>$2000.00</td>
+                        </tr>
+                        <tr>
+                            <td>Apple</td>
+                            <td>15</td>
+                            <td>$150.00</td>
+                            <td>$2250.00</td>
+                        </tr>
+                        <tr>
+                            <td>Alphanet Inc.</td>
+                            <td>12</td>
+                            <td>$250.00</td>
+                            <td>$3000.00</td>
+                        </tr>
+                        <tr>
+                            <td>Amazon</td>
+                            <td>8</td>
+                            <td>$3000.00</td>
+                            <td>$24000.00</td>
+                        </tr>
+                        <tr>
+                            <td>Facebook</td>
+                            <td>20</td>
+                            <td>$250.00</td>
+                            <td>$5000.00</td>
+                        </tr>
+                        <tr>
+                            <td>Tesla</td>
+                            <td>25</td>
+                            <td>$600.00</td>
+                            <td>$15000.00</td>
+                        </tr>
+                        <tr>
+                            <td>Samsung</td>
+                            <td>30</td>
+                            <td>$50.00</td>
+                            <td>$1500.00</td>
+                        </tr>
+                        <!-- Add more rows as needed -->
+                    </tbody>
+                </table>
             </div>
-        </section>
-        <section class="stock-holdings">
-            <h2>Stock Holdings</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Stock</th>
-                        <th>Quantity</th>
-                        <th>Current Price</th>
-                        <th>Total Value</th>
-                        <th>Profit/Loss</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Populate with user's stock holdings -->
-                </tbody>
-            </table>
-        </section>
+            <div class="section">
+                <h2>Transaction History</h2>
+                <!-- Similar table structure for transactions -->
+                <table id="transaction-history">
+                    <!-- Table headers -->
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Type of Stock</th>
+                            <th>Transaction Type</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <!-- Table body with your transaction data -->
+                    <tbody>
+                        <tr>
+                            <td>04/18/2024</td>
+                            <td>Google</td>
+                            <td>Buy</td>
+                            <td>15</td>
+                        </tr>
+                        <tr>
+                            <td>04/19/2024</td>
+                            <td>Microsoft</td>
+                            <td>Sell</td>
+                            <td>10</td>
+                        </tr>
+                        <tr>
+                            <td>04/20/2024</td>
+                            <td>Tesla</td>
+                            <td>Buy</td>
+                            <td>8</td>
+                        </tr>
+                        <tr>
+                            <td>04/21/2024</td>
+                            <td>Facebook</td>
+                            <td>Sell</td>
+                            <td>20</td>
+                        </tr>
+                        <tr>
+                            <td>04/22/2024</td>
+                            <td>Samsung</td>
+                            <td>Buy</td>
+                            <td>30</td>
+                        </tr>
+                        <tr>
+                            <td>04/23/2024</td>
+                            <td>Alphabet Inc.</td>
+                            <td>Sell</td>
+                            <td>12</td>
+                        </tr>
+                        <tr>
+                            <td>04/24/2024</td>
+                            <td>Amazon</td>
+                            <td>Buy</td>
+                            <td>5</td>
+                        </tr>
+                        <!-- Add more rows as needed -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="section">
+                <h2>Deposit Cash</h2>
+                <button id="deposit-button">Deposit</button>
+            </div>
+            <div class="section">
+                <h2>Withdraw Cash</h2>
+                <button id="withdraw-button">Withdraw</button>
+            </div>
+        </div>
     </main>
 </body>
 </html>
